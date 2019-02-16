@@ -86,3 +86,4 @@ $RECYCLE.BIN/
 *.rpm
 tmp
 dockerfiles
+oradata
