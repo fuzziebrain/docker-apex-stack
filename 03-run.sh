@@ -3,6 +3,8 @@
 CONTAINER_NAME=${1:-axer}
 ENV_FILE=${2:-.env}
 
+. $ENV_FILE
+
 echo "##### Removing any previous containers #####"
 docker rm -vf $CONTAINER_NAME
 
@@ -15,9 +17,9 @@ sudo chown 54321:54321 oradata
 
 echo "##### Creating container $CONTAINER_NAME #####"
 docker run -d --name $CONTAINER_NAME \
-        -p 50080:8080 \
-        -p 5500:5500 \
-        -p 51521:1521 \
+        -p ${DOCKER_ORDS_PORT:-50080}:8080 \
+        -p ${DOCKER_EM_PORT:-55500}:5500 \
+        -p ${DOCKER_DB_PORT:-51521}:1521 \
         --env-file $ENV_FILE \
         -v $PWD/oradata:/opt/oracle/oradata \
         -v $PWD/scripts/setup:/opt/oracle/scripts/setup \

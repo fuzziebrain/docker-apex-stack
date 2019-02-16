@@ -3,11 +3,13 @@
 # Run as oracle user
 
 ORAENV_ASK=NO
-ORACLE_SID=XE
+ORACLE_SID=${ORACLE_SID:-XE}
 
 . oraenv 
 
-ORDS_CONFIG_DIR=$ORDS_HOME/conf
+ORDS_CONFIG_DIR=$ORACLE_BASE/oradata/ordsconfig/$ORACLE_PDB
+
+mkdir -p $ORDS_CONFIG_DIR 
 
 cd $ORDS_HOME
 
@@ -15,7 +17,7 @@ cat << EOF > $ORDS_HOME/params/custom_params.properties
 db.hostname=localhost
 db.password=${ORACLE_PWD}
 db.port=1521
-db.servicename=XEPDB1
+db.servicename=${ORACLE_PDB:-XEPDB1}
 db.username=APEX_PUBLIC_USER
 plsql.gateway.add=true
 rest.services.apex.add=true

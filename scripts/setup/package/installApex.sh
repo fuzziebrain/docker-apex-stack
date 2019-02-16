@@ -3,7 +3,7 @@
 # Run as oracle user
 
 ORAENV_ASK=NO
-ORACLE_SID=XE
+ORACLE_SID=${ORACLE_SID:-XE}
 
 . oraenv 
 
@@ -11,7 +11,7 @@ cd $APEX_HOME
 
 echo "Installing APEX"
 sqlplus / as sysdba << EOF
-  alter session set container = XEPDB1;
+  alter session set container = ${ORACLE_PDB:-XEPDB1};
 
   -- Install APEX
   @apexins.sql SYSAUX SYSAUX TEMP /i/
