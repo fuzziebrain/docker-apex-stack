@@ -1,4 +1,6 @@
-# APEX Stack with Docker
+# Build an APEX Stack with Docker
+
+> For background information on this repository, please read this [blog post](https://fuzziebrain.com/content/id/1902/).
 
 ## Prerequisites
 
