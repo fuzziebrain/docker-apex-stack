@@ -1,8 +1,12 @@
 #!/bin/bash
 
+ENV_FILE=${1:-.env}
+
+. $ENV_FILE
+
 BASE_DIR=$(readlink -f $0 | xargs dirname)
-DB_VERSION=${1:-18.4.0}
-DB_EDITION=${2:-XE}
+DB_VERSION=${DB_VERSION:-18.4.0}
+DB_EDITION=${DB_EDITION:-XE}
 
 case "$DB_EDITION" in
   "EE")
