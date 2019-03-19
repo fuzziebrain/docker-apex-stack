@@ -17,10 +17,10 @@ sqlplus / as sysdba << EOF
   @apexins.sql SYSAUX SYSAUX TEMP /i/
 
   -- APEX REST configuration
-  @apex_rest_config_core.sql @ ${ORACLE_PWD} ${ORACLE_PWD}
+  @apex_rest_config_core.sql $PREFIX "${APEX_LISTENER_PWD:-$ORACLE_PWD}" "${APEX_REST_PUBLIC_USER_PWD:-$ORACLE_PWD}"
 
   -- Required for ORDS install
-  alter user apex_public_user identified by ${ORACLE_PWD} account unlock;
+  alter user apex_public_user identified by "${APEX_PUBLIC_USER_PWD:-$ORACLE_PWD}" account unlock;
 
   -- Network ACL
   prompt Setup Network ACL
