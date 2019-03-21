@@ -20,7 +20,7 @@ case "$DB_EDITION" in
     ;;
 esac
 
-echo "##### Building Docker Image for Oracle Database ${DB_VERSION} {$DB_EDITION} #####"
+echo "##### Building Docker Image for Oracle Database ${DB_VERSION} ${DB_EDITION} #####"
 cd dockerfiles && . buildDockerImage.sh -v ${DB_VERSION} ${DB_EDITION_FLAG}
 
 cd $BASE_DIR
