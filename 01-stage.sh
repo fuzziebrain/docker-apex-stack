@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_DIR=$(readlink -f $0 | xargs dirname)
+BASE_DIR=$(readlink -f -- "$0" | xargs dirname)
 
 if [ -d 'dockerfiles' ]; then
   rm -rf dockerfiles;
