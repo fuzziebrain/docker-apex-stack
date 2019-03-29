@@ -19,7 +19,7 @@
 1. Git clone this repository and set it as the working directory.
 2. Download the installer files:
     * [Oracle Database 18c XE](https://oracle.com/xe)
-    * [Oracle Application Express](https://apex.oracle.com/download) (the latest version is 18.2 as of February 16, 2019)
+    * [Oracle Application Express](https://apex.oracle.com/download) (the latest version is 19.1 as of March 29, 2019)
     * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (the latest version is 18.4 as of February 16, 2019)
 3. Place all three files in the sub-directory `files`.
 4. Run the first script to grab the latest Docker [images](https://github.com/oracle/docker-images) from Oracle:
