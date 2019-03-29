@@ -87,5 +87,5 @@ $RECYCLE.BIN/
 tmp
 dockerfiles
 oradata
-^sample.env
+!sample.env
 *.env

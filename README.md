@@ -26,14 +26,14 @@
     ```bash
     $ . 01-stage.sh
     ```
-5. Create a new file that contains the required variables. The `sample.env` file is provided and can be used, otherwise, modify as desired. The file should contain the following variables:
+5. Create a new file that contains the required variables. The `sample.env` file is provided but should **not** be used directly. Make a copy, e.g. `mysettings.env`, and modify as desired. The file should contain the following variables:
     ```bash
     ORACLE_SID=XE
     ORACLE_PDB=XEPDB1
     ORACLE_PWD=Oracle18
     APEX_ADMIN_EMAIL=myemail@domain.com
     APEX_ADMIN_PWD=Oracle__18
-    INSTALL_FILE_APEX=apex_18.2.zip
+    INSTALL_FILE_APEX=apex_19.1.zip
     INSTALL_FILE_ORDS=ords-18.4.0.354.1002.zip
     DOCKER_ORDS_PORT=50080
     DOCKER_EM_PORT=55500
@@ -49,6 +49,10 @@
     ```bash
     $ . 03-run.sh axer mysettings.env
     ```
+
+    > **IMPORTANT**
+    >
+    > The third script requires `sudo` rights. If your user does not have this privilege, comment out `sudo chown 54321:54321 oradata` and replace it with `chmod 777 oradata`.
 
 Using the sample settings, the following are accessible:
 
