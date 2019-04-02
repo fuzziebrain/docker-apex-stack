@@ -45,7 +45,7 @@
     ```
 6. Run the final script to create and run the container, where the container name is `axer` (it is preferred that you execute a command using `sudo` before executing this script):
     ```bash
-    $ . 03-run.sh axer mysettings.env
+    $ . 02-run.sh axer mysettings.env
     ```
 
     > **IMPORTANT**
