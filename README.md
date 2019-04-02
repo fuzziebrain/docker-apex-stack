@@ -50,7 +50,7 @@
 
     > **IMPORTANT**
     >
-    > The third script requires `sudo` rights. If your user does not have this privilege, comment out `sudo chown 54321:54321 oradata` and replace it with `chmod 777 oradata`.
+    > The second script requires `sudo` rights. If your user does not have this privilege, comment out `sudo chown 54321:54321 oradata` and replace it with `chmod 777 oradata`.
 
 Using the sample settings, the following are accessible:
 
