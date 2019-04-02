@@ -5,6 +5,10 @@ ENV_FILE=${2:-.env}
 
 . $ENV_FILE
 
+BASE_DIR=$(pwd -P)
+DB_VERSION=${DB_VERSION:-18.4.0}
+DB_EDITION=$(echo ${DB_EDITION:-xe} | tr '[:upper:]' '[:lower:]')
+
 echo "##### Removing any previous containers #####"
 docker rm -vf $CONTAINER_NAME
 
@@ -25,7 +29,7 @@ docker run -d --name $CONTAINER_NAME \
         -v $PWD/scripts/setup:/opt/oracle/scripts/setup \
         -v $PWD/scripts/startup:/opt/oracle/scripts/startup \
         -v $PWD/files:/tmp/files \
-        oracle/database:18.4.0-xe
+        oracle/database:${DB_VERSION}-${DB_EDITION}
 
 echo "##### Tailing logs. Ctrl-C to exit. #####"
 docker logs -f $CONTAINER_NAME
