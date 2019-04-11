@@ -48,3 +48,10 @@ if [ $UID = "0" ]; then
 else
   . $SCRIPT_DIR/package/installOrds.sh
 fi
+
+# Setup Oracle Wallet for APEX
+if [ $UID = "0" ]; then
+  runuser oracle -m -s /bin/bash -c ". $SCRIPT_DIR/package/setupBaseWallet.sh"
+else
+  . $SCRIPT_DIR/package/setupBaseWallet.sh
+fi
