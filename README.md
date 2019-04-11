@@ -20,7 +20,7 @@
 2. Download the installer files:
     * [Oracle Database 18c XE](https://oracle.com/xe) or any of the required installation files from [OTN](https://www.oracle.com/technetwork/database/)
     * [Oracle Application Express](https://apex.oracle.com/download) (the latest version is 19.1 as of March 29, 2019)
-    * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (the latest version is 18.4 as of February 16, 2019)
+    * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (the latest version is 19.1 as of April 10, 2019)
     * [Java Development Kit SE 8](https://www.oracle.com/technetwork/java/javase/downloads/)
 3. Place all three files in the sub-directory `files`.
 4. Create a new file that contains the required variables. Make a copy of `settings.env.sample`, e.g. `mysettings.env`, and modify as desired. The file should contain the following variables:
@@ -31,7 +31,7 @@
     APEX_ADMIN_EMAIL=myemail@domain.com
     APEX_ADMIN_PWD=Oracle__18
     INSTALL_FILE_APEX=apex_19.1.zip
-    INSTALL_FILE_ORDS=ords-18.4.0.354.1002.zip
+    INSTALL_FILE_ORDS=ords-19.1.0.092.1545.zip
     INSTALL_FILE_JAVA=jdk-8u201-linux-x64.tar.gz
     DOCKER_ORDS_PORT=50080
     DOCKER_EM_PORT=55500
