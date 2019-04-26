@@ -32,7 +32,10 @@ mv tmp/OracleDatabase/SingleInstance/dockerfiles/ .
 rm -rf tmp/
 
 echo "##### Staging RPM #####"
-if [ $DB_VERSION = '18.4.0' ] && [ $DB_EDITION = 'xe' ]; then
+if [ $DB_VERSION = '19.3.0' ]; then
+  cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$BASE_DIR/files/LINUX.X64_193000_db_home.zip
+  DOCKER_FILE=Dockerfile
+elif [ $DB_VERSION = '18.4.0' ] && [ $DB_EDITION = 'xe' ]; then
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$BASE_DIR/files/oracle-database-xe-18c-1.0-1.x86_64.rpm
   DOCKER_FILE=Dockerfile.$DB_EDITION
 elif [ $DB_VERSION = '18.3.0' ]; then
