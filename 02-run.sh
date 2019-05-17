@@ -18,7 +18,7 @@ if [ ! -d "${HOST_DATA_DIR}" ]; then
 fi
 
 echo "##### Changing file ownership. May require password to continue. #####"
-sudo chown 54321:543321 ${HOST_DATA_DIR} || chmod 777 ${HOST_DATA_DIR}
+sudo -n chown 54321:543321 ${HOST_DATA_DIR} || chmod 777 ${HOST_DATA_DIR}
 
 echo "##### Creating container $CONTAINER_NAME #####"
 docker run -d --name $CONTAINER_NAME \
