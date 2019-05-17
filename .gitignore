@@ -86,8 +86,10 @@ $RECYCLE.BIN/
 *.rpm
 *.tar
 *.gz
+*.swp
 tmp
 dockerfiles
 oradata
+*-oradata
 *.env
 *.bak
