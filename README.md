@@ -39,6 +39,8 @@
     DB_VERSION=18.4.0
     DB_EDITION=XE
     ```
+
+    > To specify a Docker network to attach to, add the parameter `DOCKER_NETWORK_NAME`. The run script will check if the network exists, and if not, create it.
 5. Run the first script to grab the latest Docker [images](https://github.com/oracle/docker-images) from Oracle and build the Oracle Database image. The script takes one parameter, the environment filename (`mysettings.env`):
     ```bash
     $ . 01-build.sh mysettings.env
