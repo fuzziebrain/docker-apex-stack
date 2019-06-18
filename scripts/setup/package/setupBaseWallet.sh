@@ -7,10 +7,15 @@ ORACLE_SID=${ORACLE_SID:-XE}
 
 . oraenv 
 
+export WALLET_BASE_PATH=$ORACLE_BASE/oradata/dbconfig/$ORACLE_SID/wallets
 export BUNDLE_FILE=/etc/pki/tls/cert.pem
-export WALLET_PATH=$ORACLE_BASE/admin/$ORACLE_SID/tls_wallet
+export WALLET_PATH=$WALLET_BASE_PATH/tls_wallet
 export WALLET_PWD=$ORACLE_PWD
 export WALLET_PWD_CONFIRM=$WALLET_PWD
+
+if [ ! -d $WALLET_BASE_PATH ]; then
+  mkdir -p $WALLET_BASE_PATH
+fi
 
 sh -c "$(curl -fsSL https://gist.githubusercontent.com/fuzziebrain/202f902d8fc6d8de586da5097a501047/raw/78dba192f4c15f59d14ac17491734897fc440e40/createBaseWallet.sh)"
 
