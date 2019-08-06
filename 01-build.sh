@@ -54,12 +54,16 @@ fi
 
 cd $BASE_DIR
 
-# echo "##### Modify target Dockerfile #####"
-# REPLACEMENT_STRING="COPY scripts/setup/ \$ORACLE_BASE/scripts/setup/\nCOPY scripts/startup/ \$ORACLE_BASE/scripts/startup/\nCOPY files/ /tmp/files/\n"
-# sed -i -r "s|^VOLUME.+$|${REPLACEMENT_STRING}|g" dockerfiles/${DB_VERSION}/${DOCKER_FILE:-Dockerfile}
-# mkdir -p dockerfiles/${DB_VERSION}/files
-# cp files/$INSTALL_FILE_APEX files/$INSTALL_FILE_ORDS files/$INSTALL_FILE_JAVA dockerfiles/${DB_VERSION}/files/
-# cp -R scripts dockerfiles/${DB_VERSION}/scripts
+# RTU_ENABLED default 'N'
+# The following is used for preparing "ready to use" images for internal use only.
+if [[ $RTU_ENABLED =~ $(Y|y) ]]; then
+  echo "##### Modify target Dockerfile #####"
+  REPLACEMENT_STRING="COPY scripts/setup/ \$ORACLE_BASE/scripts/setup/\nCOPY scripts/startup/ \$ORACLE_BASE/scripts/startup/\nCOPY files/ /tmp/files/\n"
+  sed -i -r "s|^VOLUME.+$|${REPLACEMENT_STRING}|g" dockerfiles/${DB_VERSION}/${DOCKER_FILE:-Dockerfile}
+  mkdir -p dockerfiles/${DB_VERSION}/files
+  cp files/$INSTALL_FILE_APEX files/$INSTALL_FILE_ORDS files/$INSTALL_FILE_JAVA dockerfiles/${DB_VERSION}/files/
+  cp -R scripts dockerfiles/${DB_VERSION}/scripts
+fi
 
 echo "##### Building Docker Image for Oracle Database ${DB_VERSION} ${DB_EDITION} #####"
 cd dockerfiles && . buildDockerImage.sh -v ${DB_VERSION} ${DB_EDITION_FLAG}
