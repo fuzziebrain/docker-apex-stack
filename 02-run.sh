@@ -10,6 +10,7 @@ DB_VERSION=${DB_VERSION:-18.4.0}
 DB_EDITION=$(echo ${DB_EDITION:-xe} | tr '[:upper:]' '[:lower:]')
 HOST_DATA_DIR=${CONTAINER_NAME}-oradata
 DOCKER_NETWORK_NAME=${DOCKER_NETWORK_NAME:-bridge}
+FILES_DIR=${FILES_DIR:-$BASE_DIR/files}
 
 echo "##### Check if Docker network $DOCKER_NETWORK_NAME #####"
 docker network inspect -f {{.Name}} $DOCKER_NETWORK_NAME || \
@@ -47,7 +48,7 @@ else
           -v $PWD/$HOST_DATA_DIR:/opt/oracle/oradata \
           -v $PWD/scripts/setup:/opt/oracle/scripts/setup \
           -v $PWD/scripts/startup:/opt/oracle/scripts/startup \
-          -v $PWD/files:/tmp/files \
+          -v $FILES_DIR:/tmp/files \
           oracle/database:${DB_VERSION}-${DB_EDITION}
 fi
 
