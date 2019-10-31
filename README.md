@@ -20,7 +20,7 @@
     * [Oracle Database 18c XE](https://oracle.com/xe) or any of the required installation files from [OTN](https://www.oracle.com/technetwork/database/) (supports versions up to 19.3 as of April 25, 2019)
     * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 19.1 as of March 29, 2019)
     * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 19.2 as of August 31, 2019)
-    * [Java Development Kit SE 8](https://www.oracle.com/technetwork/java/javase/downloads/) (IMPORTANT: Download the tarball)
+    * [Java Development Kit SE 8](https://www.oracle.com/technetwork/java/javase/downloads/) (**IMPORTANT**: Please download the tarball)
 3. Place all four files in the sub-directory `files`.
 4. Create a new file that contains the required variables. Make a copy of `settings.env.sample`, e.g. `mysettings.env`, and modify as desired. The file should contain the following variables:
     ```bash
@@ -29,20 +29,25 @@
     ORACLE_PWD=Oracle18
     APEX_ADMIN_EMAIL=myemail@domain.com
     APEX_ADMIN_PWD=Oracle__18
-    INSTALL_FILE_APEX=apex_19.1.zip
+    APEX_PUBLIC_USER_PWD=Oracle18_1
+    APEX_LISTENER_PWD=Oracle18_2
+    APEX_REST_PUBLIC_USER_PWD=Oracle18_3
+    ORDS_PUBLIC_USER_PWD=Oracle18_4
+    INSTALL_FILE_APEX=apex_19.2.zip
     INSTALL_FILE_ORDS=ords-19.2.0.199.1647.zip
-    INSTALL_FILE_JAVA=jdk-8u221-linux-x64.tar.gz
+    INSTALL_FILE_JAVA=jdk-8u231-linux-x64.tar.gz
     DOCKER_ORDS_PORT=50080
     DOCKER_EM_PORT=55500
     DOCKER_DB_PORT=51521
     DB_VERSION=18.4.0
-    DB_EDITION=XE
+    DB_EDITION=xe
     DOCKER_NETWORK_NAME=axer_network
     RTU_ENABLED=N
     ```
 
     > * Specify the Docker network to attach to using the parameter `DOCKER_NETWORK_NAME`. The run script will check if the network exists, and if not, create it.
-    > * A new parameter `RTU_ENABLED` has been introduced. It allows users to create containers that can be used to create an image from using Docker [commit](https://docs.docker.com/engine/reference/commandline/commit/). Set the value to "Y" if this ability is required.
+    > * The parameter `RTU_ENABLED` has been introduced. It allows users to create containers that can be used to create an image from using Docker [commit](https://docs.docker.com/engine/reference/commandline/commit/). Set the value to "Y" if this ability is required.
+    > * **NEW** Use the `FILES_DIR` parameter to specify the local path to all the required installation files, e.g. `/path/to/my/downloads`.
 5. Run the first script to grab the latest Docker [images](https://github.com/oracle/docker-images) from Oracle and build the Oracle Database image. The script takes one parameter, the environment filename (`mysettings.env`):
     ```bash
     $ . 01-build.sh mysettings.env
@@ -58,4 +63,4 @@ Using the sample settings, the following are accessible:
 |-|-|-|
 | 50080 | APEX | http://localhost:50080 |
 | 51521 | Database | N/A |
-| 55500 | Enterprise Manager Express | https://localhost:55500/em | 
+| 55500 | Enterprise Manager Express | https://localhost:55500/em |
