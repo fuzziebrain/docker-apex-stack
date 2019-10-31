@@ -50,11 +50,11 @@
     > * **NEW** Use the `FILES_DIR` parameter to specify the local path to all the required installation files, e.g. `/path/to/my/downloads`.
 5. Run the first script to grab the latest Docker [images](https://github.com/oracle/docker-images) from Oracle and build the Oracle Database image. The script takes one parameter, the environment filename (`mysettings.env`):
     ```bash
-    $ . 01-build.sh mysettings.env
+    $ bash 01-build.sh mysettings.env
     ```
 6. Run the final script to create and run the container, where the container name is `axer` (it is preferred that you execute a command using `sudo` before executing this script):
     ```bash
-    $ . 02-run.sh axer mysettings.env
+    $ bash 02-run.sh axer mysettings.env
     ```
 
 Using the sample settings, the following are accessible:
