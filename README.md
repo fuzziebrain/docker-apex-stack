@@ -18,7 +18,7 @@
 1. Git clone this repository and set it as the working directory.
 2. Download the installer files:
     * [Oracle Database 18c XE](https://oracle.com/xe) or any of the required installation files from [OTN](https://www.oracle.com/technetwork/database/) (supports versions up to 19.3 as of April 25, 2019)
-    * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 19.1 as of March 29, 2019)
+    * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 19.2 as of November 1, 2019)
     * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 19.2 as of August 31, 2019)
     * [Java Development Kit SE 8](https://www.oracle.com/technetwork/java/javase/downloads/) (**IMPORTANT**: Please download the tarball, e.g. `jdk-8u231-linux-x64.tar.gz`.)
 3. Place all four files in the sub-directory `files`.
