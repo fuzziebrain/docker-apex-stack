@@ -8,6 +8,7 @@ BASE_DIR=$(pwd -P)
 DB_VERSION=${DB_VERSION:-18.4.0}
 DB_EDITION=$(echo ${DB_EDITION:-xe} | tr '[:upper:]' '[:lower:]')
 FILES_DIR=${FILES_DIR:-$BASE_DIR/files}
+ALLOW_DB_PATCHING=${ALLOW_DB_PATCHING:-N}
 
 SED_OPTS='-i -r'
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -69,6 +70,12 @@ if [[ $RTU_ENABLED =~ (Y|y) ]]; then
   mkdir -p dockerfiles/${DB_VERSION}/files
   cp $FILES_DIR/$INSTALL_FILE_APEX $FILES_DIR/$INSTALL_FILE_ORDS $FILES_DIR/$INSTALL_FILE_JAVA dockerfiles/${DB_VERSION}/files/
   cp -R scripts dockerfiles/${DB_VERSION}/scripts
+fi
+
+# Retain the DBUA to allow DB patching. See https://github.com/oracle/docker-images/issues/1187
+if [[ $ALLOW_DB_PATCHING =~ (Y|y) ]]; then
+  echo "##### Preventing removal of DBUA #####"
+  find dockerfiles -name installDBBinaries.sh -exec sed $SED_OPTS "s|^(rm.+dbua.+)$|#\1|g" {} \;
 fi
 
 echo "##### Building Docker Image for Oracle Database ${DB_VERSION} ${DB_EDITION} #####"

@@ -43,6 +43,7 @@
     DB_EDITION=xe
     DOCKER_NETWORK_NAME=axer_network
     RTU_ENABLED=N
+    ALLOW_DB_PATCHING=N
     ```
 
     > * Specify the Docker network to attach to using the parameter `DOCKER_NETWORK_NAME`. The run script will check if the network exists, and if not, create it.
