@@ -7,12 +7,27 @@ export SCRIPT_DIR=$SCRIPTS_ROOT
 export FILES_DIR=/tmp/files
 export PATH=$JAVA_HOME/bin:$PATH
 
+if [[ ($DB_VERSION = '19.3.0') || ($DB_VERSION = '18.4.0' && $DB_EDITION = 'xe') ]]; then
+  export ML_PERMITTED=Y
+else
+  export ML_PERMITTED=N
+fi
+
 echo "##### Install dependencies if required #####"
 if [ ! -d $JAVA_HOME ]; then
   JAVA_DIR_NAME=`tar -tzf $FILES_DIR/$INSTALL_FILE_JAVA | head -1 | cut -f1 -d"/"`
   mkdir -p $ORACLE_BASE/product/java
   tar zxf $FILES_DIR/$INSTALL_FILE_JAVA --directory $ORACLE_BASE/product/java
   ln -s $ORACLE_BASE/product/java/$JAVA_DIR_NAME $JAVA_HOME
+fi
+
+echo "##### Install ORE dependencies and configure ORE DB support if required #####"
+if [[ $OML4R_SUPPORT =~ (Y|y) && $ML_PERMITTED = 'Y' ]]; then
+  if [ $UID = "0" ]; then
+    runuser oracle -m -s /bin/bash -c ". $SCRIPT_DIR/package/enableORE.sh"
+  else
+    . $SCRIPT_DIR/package/enableORE.sh
+  fi
 fi
 
 # Extract files

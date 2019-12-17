@@ -42,13 +42,16 @@
     DB_VERSION=18.4.0
     DB_EDITION=xe
     DOCKER_NETWORK_NAME=axer_network
+    OML4R_SUPPORT=N
     RTU_ENABLED=N
     ALLOW_DB_PATCHING=N
     ```
 
     > * Specify the Docker network to attach to using the parameter `DOCKER_NETWORK_NAME`. The run script will check if the network exists, and if not, create it.
     > * The parameter `RTU_ENABLED` has been introduced. It allows users to create containers that can be used to create an image from using Docker [commit](https://docs.docker.com/engine/reference/commandline/commit/). Set the value to "Y" if this ability is required.
-    > * **NEW** Use the `FILES_DIR` parameter to specify the local path to all the required installation files, e.g. `/path/to/my/downloads`.
+    > * Use the `FILES_DIR` parameter to specify the local path to all the required installation files, e.g. `/path/to/my/downloads`.
+    > * **NEW** Set the value of `ALLOW_DB_PATCHING` to 'Y' to preserve files needed to successfully patch the database software with *OPatch*.
+    > * **NEW** [As of December 5, 2019](https://blogs.oracle.com/database/machine-learning%2c-spatial-and-graph-no-license-required-v2), Oracle Machine Learning (previously known as Oracle Advanced Analytics) option is now included with all editions of Oracle Database 12c R2 and later, including 18c Express Edition (XE). Use the `OML4R_SUPPORT` parameter to install database support for running embedded R scripts. At the moment, this option is only valid for all editions of 19c and 18c XE. Support for 12.2 and the remaining editions of 18c are forthcoming.
 5. Run the first script to grab the latest Docker [images](https://github.com/oracle/docker-images) from Oracle and build the Oracle Database image. The script takes one parameter, the environment filename (`mysettings.env`):
     ```bash
     $ bash 01-build.sh mysettings.env

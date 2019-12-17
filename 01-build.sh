@@ -9,6 +9,7 @@ DB_VERSION=${DB_VERSION:-18.4.0}
 DB_EDITION=$(echo ${DB_EDITION:-xe} | tr '[:upper:]' '[:lower:]')
 FILES_DIR=${FILES_DIR:-$BASE_DIR/files}
 ALLOW_DB_PATCHING=${ALLOW_DB_PATCHING:-N}
+OML4R_SUPPORT=${OML4R_SUPPORT:-N}
 
 SED_OPTS='-i -r'
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -27,6 +28,18 @@ case "$DB_EDITION" in
     ;;
 esac
 
+function setupR() {
+  echo "Installing R for Oracle ML Support"
+  # Copy the installR.sh to the base Docker directory.
+  cp -R $BASE_DIR/oml-kit/installR.sh .
+
+  # Modify the COPY statement.
+  sed $SED_OPTS "s|^(COPY)(.+CHECK_SPACE_FILE.+INSTALL_DIR/)$|\1 installR.sh\2|g" ${DOCKER_FILE:-Dockerfile}
+
+  REPLACEMENT_STRING=$'\$INSTALL_DIR/installR.sh \&\& \\\ \\\n    '
+  sed $SED_OPTS "s|(rm -rf .INSTALL_DIR.*)$|${REPLACEMENT_STRING}\1|g" ${DOCKER_FILE:-Dockerfile}
+}
+
 if [ -d 'dockerfiles' ]; then
   rm -rf dockerfiles;
 fi
@@ -42,9 +55,17 @@ echo "##### Staging RPM #####"
 if [ $DB_VERSION = '19.3.0' ]; then
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/LINUX.X64_193000_db_home.zip
   DOCKER_FILE=Dockerfile
+
+  if [[ $OML4R_SUPPORT =~ (Y|y) ]]; then
+    setupR
+  fi
 elif [ $DB_VERSION = '18.4.0' ] && [ $DB_EDITION = 'xe' ]; then
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/oracle-database-xe-18c-1.0-1.x86_64.rpm
   DOCKER_FILE=Dockerfile.$DB_EDITION
+
+  if [[ $OML4R_SUPPORT =~ (Y|y) ]]; then
+    setupR
+  fi
 elif [ $DB_VERSION = '18.3.0' ]; then
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/LINUX.X64_180000_db_home.zip
   DOCKER_FILE=Dockerfile
