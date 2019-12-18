@@ -7,12 +7,6 @@ export SCRIPT_DIR=$SCRIPTS_ROOT
 export FILES_DIR=/tmp/files
 export PATH=$JAVA_HOME/bin:$PATH
 
-if [[ ($DB_VERSION = '19.3.0') || ($DB_VERSION = '18.4.0' && $DB_EDITION = 'xe') ]]; then
-  export ML_PERMITTED=Y
-else
-  export ML_PERMITTED=N
-fi
-
 echo "##### Install dependencies if required #####"
 if [ ! -d $JAVA_HOME ]; then
   JAVA_DIR_NAME=`tar -tzf $FILES_DIR/$INSTALL_FILE_JAVA | head -1 | cut -f1 -d"/"`
@@ -21,12 +15,19 @@ if [ ! -d $JAVA_HOME ]; then
   ln -s $ORACLE_BASE/product/java/$JAVA_DIR_NAME $JAVA_HOME
 fi
 
-echo "##### Install ORE dependencies if required #####"
-if [[ $OML4R_SUPPORT =~ (Y|y) && $ML_PERMITTED = 'Y' ]]; then
-  if [ $UID = "0" ]; then
-    runuser oracle -m -s /bin/bash -c ". $SCRIPT_DIR/package/installOreDeps.sh"
-  else
-    . $SCRIPT_DIR/package/installOreDeps.sh
+if [[ $OML4R_SUPPORT =~ (Y|y) ]]; then
+  if [[
+    ($DB_VERSION = '19.3.0')
+    || ($DB_VERSION = '18.4.0' && $DB_EDITION = 'xe')
+    || ($DB_VERSION = '18.3.0')
+    # || ($DB_VERSION = '12.2.0.1')
+  ]]; then
+    echo "##### Install ORE dependencies if necessary #####"
+    if [ $UID = "0" ]; then
+      runuser oracle -m -s /bin/bash -c ". $SCRIPT_DIR/package/installOreDeps.sh"
+    else
+      . $SCRIPT_DIR/package/installOreDeps.sh
+    fi
   fi
 fi
 

@@ -55,17 +55,9 @@ echo "##### Staging RPM #####"
 if [ $DB_VERSION = '19.3.0' ]; then
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/LINUX.X64_193000_db_home.zip
   DOCKER_FILE=Dockerfile
-
-  if [[ $OML4R_SUPPORT =~ (Y|y) ]]; then
-    setupR
-  fi
 elif [ $DB_VERSION = '18.4.0' ] && [ $DB_EDITION = 'xe' ]; then
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/oracle-database-xe-18c-1.0-1.x86_64.rpm
   DOCKER_FILE=Dockerfile.$DB_EDITION
-
-  if [[ $OML4R_SUPPORT =~ (Y|y) ]]; then
-    setupR
-  fi
 elif [ $DB_VERSION = '18.3.0' ]; then
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/LINUX.X64_180000_db_home.zip
   DOCKER_FILE=Dockerfile
@@ -78,6 +70,17 @@ elif [ $DB_VERSION = '12.1.0.2' ]; then
   DOCKER_FILE=Dockerfile.$DB_EDITION
 else
   echo "Unknown or unsupported database version and/or edition."
+fi
+
+if [[ $OML4R_SUPPORT =~ (Y|y) ]]; then
+  if [[
+    ($DB_VERSION = '19.3.0')
+    || ($DB_VERSION = '18.4.0' && $DB_EDITION = 'xe')
+    || ($DB_VERSION = '18.3.0')
+    # || ($DB_VERSION = '12.2.0.1')
+  ]]; then
+    setupR
+  fi
 fi
 
 cd $BASE_DIR
