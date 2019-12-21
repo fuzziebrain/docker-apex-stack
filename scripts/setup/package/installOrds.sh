@@ -5,15 +5,17 @@
 ORAENV_ASK=NO
 ORACLE_SID=${ORACLE_SID:-XE}
 
-. oraenv 
+. oraenv
 
 ORDS_CONFIG_DIR=$ORACLE_BASE/oradata/ordsconfig/$ORACLE_PDB
 
-mkdir -p $ORDS_CONFIG_DIR 
+mkdir -p $ORDS_CONFIG_DIR
 
 cd $ORDS_HOME
 
-cat << EOF > $ORDS_HOME/params/custom_params.properties
+PARAM_FILE=$ORDS_HOME/params/custom_params.properties
+
+cat << EOF > $PARAM_FILE
 db.hostname=localhost
 db.password=${APEX_PUBLIC_USER_PWD:-$ORACLE_PWD}
 db.port=1521
@@ -32,6 +34,15 @@ user.tablespace.temp=TEMP
 sys.user=sys
 sys.password=${ORACLE_PWD}
 EOF
+
+# If SQLDEVWEB = Y, then REST_ENABLED_SQL must be Y
+if [[ $SQLDEVWEB =~ (Y|y) || $REST_ENABLED_SQL =~ (Y|y) ]]; then
+    echo "restEnabledSql.active=true" >> $PARAM_FILE
+fi
+
+if [[ $SQLDEVWEB =~ (Y|y) ]]; then
+    echo "feature.sdw=true" >> $PARAM_FILE
+fi
 
 java -jar ords.war configdir $ORDS_CONFIG_DIR
 
