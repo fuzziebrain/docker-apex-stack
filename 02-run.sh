@@ -26,7 +26,7 @@ fi
 
 echo "##### Changing file ownership. May require password to continue. #####"
 if ! [[ $RTU_ENABLED =~ ^(Y|y)$ ]]; then
-  sudo -n chown 54321:543321 ${HOST_DATA_DIR} || chmod 777 ${HOST_DATA_DIR}
+  sudo -n chown 54321:54321 ${HOST_DATA_DIR} || chmod 777 ${HOST_DATA_DIR}
 fi
 
 echo "##### Creating container $CONTAINER_NAME #####"
