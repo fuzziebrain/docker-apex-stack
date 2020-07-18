@@ -36,12 +36,16 @@ sys.password=${ORACLE_PWD}
 EOF
 
 # If SQLDEVWEB = Y, then REST_ENABLED_SQL must be Y
-if [[ $SQLDEVWEB =~ (Y|y) || $REST_ENABLED_SQL =~ (Y|y) ]]; then
+if [[ $SQLDEVWEB =~ (Y|y) || $REST_ENABLED_SQL =~ (Y|y) || $DATABASEAPI =~ (Y|y) ]]; then
     echo "restEnabledSql.active=true" >> $PARAM_FILE
 fi
 
 if [[ $SQLDEVWEB =~ (Y|y) ]]; then
     echo "feature.sdw=true" >> $PARAM_FILE
+fi
+
+if [[ $DATABASEAPI =~ (Y|y) ]]; then
+    echo "database.api.enabled=true" >> $PARAM_FILE
 fi
 
 java -jar ords.war configdir $ORDS_CONFIG_DIR
