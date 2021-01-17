@@ -33,6 +33,7 @@ user.tablespace.default=SYSAUX
 user.tablespace.temp=TEMP
 sys.user=sys
 sys.password=${ORACLE_PWD}
+standalone.mode=false
 EOF
 
 # If SQLDEVWEB = Y, then REST_ENABLED_SQL must be Y
