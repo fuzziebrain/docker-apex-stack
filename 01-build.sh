@@ -103,7 +103,7 @@ if [[ $ALLOW_DB_PATCHING =~ (Y|y) ]]; then
 fi
 
 echo "##### Building Docker Image for Oracle Database ${DB_VERSION} ${DB_EDITION} #####"
-cd dockerfiles && . buildDockerImage.sh -v ${DB_VERSION} ${DB_EDITION_FLAG}
+cd dockerfiles && . buildContainerImage.sh -v ${DB_VERSION} ${DB_EDITION_FLAG}
 
 cd $BASE_DIR
 echo "##### Done #####"

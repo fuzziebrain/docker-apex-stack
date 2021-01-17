@@ -61,7 +61,7 @@
     ```bash
     $ bash 01-build.sh mysettings.env
     ```
-6. Run the final script to create and run the container, where the container name is `das` (it is preferred that you execute a command using `sudo` before executing this script):
+6. Run the final script to create and run the container, where the container name is `das`:
     ```bash
     $ bash 02-run.sh das mysettings.env
     ```
