@@ -99,7 +99,7 @@ fi
 # Retain the DBUA to allow DB patching. See https://github.com/oracle/docker-images/issues/1187
 if [[ $ALLOW_DB_PATCHING =~ (Y|y) ]]; then
   echo "##### Preventing removal of DBUA #####"
-  find dockerfiles -name installDBBinaries.sh -exec sed $SED_OPTS "s|^(rm.+dbua.+)$|#\1|g" {} \;
+  find dockerfiles -name installDBBinaries.sh -exec sed $SED_OPTS "s|^(\s*?rm.+ORACLE_HOME.+)$|#\1|g" {} \;
 fi
 
 echo "##### Building Docker Image for Oracle Database ${DB_VERSION} ${DB_EDITION} #####"
