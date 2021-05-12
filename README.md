@@ -18,9 +18,9 @@
 1. Git clone this repository and set it as the working directory.
 2. Download the installer files:
     * [Oracle Database 18c XE](https://oracle.com/xe) or any of the required installation files from [OTN](https://www.oracle.com/technetwork/database/) (supports versions up to 19.3 as of April 25, 2019)
-    * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 20.2 as of October 21, 2020)
-    * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 20.4 as of January 16, 2021)
-    * [Java Development Kit SE 8](https://www.oracle.com/technetwork/java/javase/downloads/) (**IMPORTANT**: Please download the tarball, e.g. `jdk-8u271-linux-x64.tar.gz`.)
+    * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 21.1 as of May 12, 2021)
+    * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 20.4.3 as of May 12, 2021)
+    * [Java Development Kit SE 8](https://www.oracle.com/technetwork/java/javase/downloads/) (**IMPORTANT**: Please download the tarball, e.g. `jdk-8u291-linux-x64.tar.gz`.)
 3. Place all four files in the sub-directory `files`.
 4. Create a new file that contains the required variables. Make a copy of `settings.env.sample`, e.g. `mysettings.env`, and modify as desired. The file should contain the following variables:
     ```bash
@@ -33,9 +33,9 @@
     APEX_LISTENER_PWD=Oracle18_2
     APEX_REST_PUBLIC_USER_PWD=Oracle18_3
     ORDS_PUBLIC_USER_PWD=Oracle18_4
-    INSTALL_FILE_APEX=apex_20.2.zip
-    INSTALL_FILE_ORDS=ords-20.4.1.013.1644.zip
-    INSTALL_FILE_JAVA=jdk-8u271-linux-x64.tar.gz
+	INSTALL_FILE_APEX=apex_21.1.zip
+	INSTALL_FILE_ORDS=ords-20.4.3.050.1904.zip
+	INSTALL_FILE_JAVA=jdk-8u291-linux-x64.tar.gz
     DOCKER_ORDS_PORT=50080
     DOCKER_EM_PORT=55500
     DOCKER_DB_PORT=51521
