@@ -20,7 +20,7 @@
     * [Oracle Database 18c XE](https://oracle.com/xe) or any of the required installation files from [OTN](https://www.oracle.com/technetwork/database/) (supports versions up to 19.3 as of April 25, 2019)
     * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 21.1 as of May 12, 2021)
     * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 21.2.0.174.1826 as of July 10, 2021)
-1. For releases after [0.6.0](https://github.com/fuzziebrain/docker-apex-stack/releases/tag/0.6.0), either choose to use the binaries from [OpenJDK](openjdk.java.net/) or download a licensed Java runtime from Oracle. Please refer to the additonal notes section below for details about the `INSTALL_FILE_JAVA` parameter.
+1. For releases after [0.6.0](https://github.com/fuzziebrain/docker-apex-stack/releases/tag/0.6.0), either choose to use the binaries from [OpenJDK](https://openjdk.java.net/) or download a licensed Java runtime from Oracle. Please refer to the additonal notes section [below](#Additional-Notes-About-the-Settings-File) for details about the `INSTALL_FILE_JAVA` parameter.
 1. Place all installer files in the sub-directory `files`.
 1. Create a file that contains the required environment variables for your build. Please refer to the additonal notes [below](#Additional-Notes-About-the-Settings-File) for more information about the various parameters that can be set. Included in this repository are two examples or templates that you can use:
     * [`settings.env.sample`](./settings.env.sample).
