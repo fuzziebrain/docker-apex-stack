@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 CONTAINER_NAME=${1:-axer}
 ENV_FILE=${2:-.env}
