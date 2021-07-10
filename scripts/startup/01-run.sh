@@ -2,17 +2,23 @@
 
 export APEX_HOME=$ORACLE_BASE/product/apex
 export ORDS_HOME=$ORACLE_BASE/product/ords
-export JAVA_HOME=$ORACLE_BASE/product/java/latest
 export SCRIPT_DIR=$SCRIPTS_ROOT
 export FILES_DIR=/tmp/files
-export PATH=$JAVA_HOME/bin:$PATH
 
 echo "##### Install dependencies if required #####"
-if [ ! -d $JAVA_HOME ]; then
-  JAVA_DIR_NAME=`tar -tzf $FILES_DIR/$INSTALL_FILE_JAVA | head -1 | cut -f1 -d"/"`
-  mkdir -p $ORACLE_BASE/product/java
-  tar zxf $FILES_DIR/$INSTALL_FILE_JAVA --directory $ORACLE_BASE/product/java
-  ln -s $ORACLE_BASE/product/java/$JAVA_DIR_NAME $JAVA_HOME
+if [ $INSTALL_FILE_JAVA == 'openjdk1.8' ]; then
+  yum install -y java-1.8.0-openjdk
+elif [ $INSTALL_FILE_JAVA == 'openjdk11' ]; then
+  yum install -y java-11-openjdk
+else
+  export JAVA_HOME=$ORACLE_BASE/product/java/latest
+  export PATH=$JAVA_HOME/bin:$PATH
+  if [ ! -d $JAVA_HOME ]; then
+    JAVA_DIR_NAME=`tar -tzf $FILES_DIR/$INSTALL_FILE_JAVA | head -1 | cut -f1 -d"/"`
+    mkdir -p $ORACLE_BASE/product/java
+    tar zxf $FILES_DIR/$INSTALL_FILE_JAVA --directory $ORACLE_BASE/product/java
+    ln -s $ORACLE_BASE/product/java/$JAVA_DIR_NAME $JAVA_HOME
+  fi
 fi
 
 if [[ $OML4R_SUPPORT =~ (Y|y) ]]; then
