@@ -34,6 +34,32 @@
     $ bash 02-run.sh das mysettings.env
     ```
 
+## Quick Start
+
+[Martin](https://github.com/martindsouza) [suggested](https://twitter.com/martindsouza/status/1412799632053211141), so here it is! Now included is the the [`quickstart.sh`](./quickstart.sh) script. Simply:
+1. Execute the script.
+1. Enter your email address for the APEX instance administrator.
+1. Optionally, enter a preferred container name.
+1. If all's good, note down your container name and password.
+1. Enter `Y` to continue.
+1. Wait till there is minimal or no activity in the script then go to http://localhost:50080/ords/apex.
+
+```
+$ ./quickstart.sh 
+Enter an email address for your APEX administrator (required): apexdev@example.com
+Container name (leave empty to have one generated for you): apexiscool
+##### Important Information #####
+Your Docker container name is: apexiscool
+Your password for the database and APEX internal workspace is: donotcommit
+
+We are now ready to build the Docker image and deploy your container.
+Type "Y" to continue or CTRL-C to exit: y
+```
+
+> **Note**
+>
+> Should you forget to save your password, you can find it in the generated settings file along with any other details about the container. It is named after your container, e.g. `apexiscool.env`.
+
 ## Additional Notes About the Settings File
 
 * Specify the Docker network to attach to using the parameter `DOCKER_NETWORK_NAME`. The run script will check if the network exists, and if not, create it.
