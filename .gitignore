@@ -93,3 +93,4 @@ oradata
 *-oradata
 *.env
 *.bak
+*.log
