@@ -4,17 +4,17 @@
 ##### Functions #####
 function generate_password() {
     # SC => special characters allowed
-    SC="_-"
+    SC="_"
     while
-        _password=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9'$SC | head -c $(($RANDOM % 6 + 15)))
-        [[ 
-            $(echo $_password | grep -o '['$SC']' | wc -l) < 2 
-            || $(echo $_password | grep -o '[0-9]' | wc -l) < 2 
-            || $(echo $_password | grep -o '[A-Z]' | wc -l) < 2 
-            || $(echo $_password | grep -o '[a-z]' | wc -l) < 2 
+        _password=$(openssl rand -base64 $(($RANDOM % 6 + 15)) | tr '[:punct:]' $SC)
+        [[
+            $(echo $_password | grep -o '['$SC']' | wc -l) -lt 2
+            || $(echo $_password | grep -o '[0-9]' | wc -l) -lt 2
+            || $(echo $_password | grep -o '[A-Z]' | wc -l) -lt 2
+            || $(echo $_password | grep -o '[a-z]' | wc -l) -lt 2
         ]]
     do true; done
-    
+
     echo $_password
 }
 
