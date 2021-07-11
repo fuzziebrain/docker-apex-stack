@@ -17,7 +17,7 @@
 
 1. Git clone this repository and set it as the working directory.
 1. Download the installer files:
-    * [Oracle Database 18c XE](https://oracle.com/xe) or any of the required installation files from [OTN](https://www.oracle.com/technetwork/database/) (supports versions up to 19.3 as of April 25, 2019)
+    * The required Oracle Database installation files from [OTN](https://www.oracle.com/technetwork/database/) (supports versions up to 19.3 as of April 25, 2019). **Note:** For [Oracle Database 18c XE](https://oracle.com/xe), you are no longer required to download the binaries (see issue #39).
     * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 21.1 as of May 12, 2021)
     * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 21.2.0.174.1826 as of July 10, 2021)
 1. For releases after [0.6.0](https://github.com/fuzziebrain/docker-apex-stack/releases/tag/0.6.0), either choose to use the binaries from [OpenJDK](https://openjdk.java.net/) or download a licensed Java runtime from Oracle. Please refer to the additonal notes section [below](#Additional-Notes-About-the-Settings-File) for details about the `INSTALL_FILE_JAVA` parameter.
@@ -45,7 +45,7 @@
 1. Wait till there is minimal or no activity in the script then go to http://localhost:50080/ords/apex.
 
 ```
-$ ./quickstart.sh 
+$ ./quickstart.sh
 Enter an email address for your APEX administrator (required): apexdev@example.com
 Container name (leave empty to have one generated for you): apexiscool
 ##### Important Information #####
