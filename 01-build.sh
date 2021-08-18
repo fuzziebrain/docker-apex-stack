@@ -52,7 +52,10 @@ mv tmp/OracleDatabase/SingleInstance/dockerfiles/ .
 rm -rf tmp/
 
 echo "##### Staging RPM #####"
-if [ $DB_VERSION = '19.3.0' ]; then
+if [ $DB_VERSION = '21.3.0' ]; then
+  cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/LINUX.X64_213000_db_home.zip
+  DOCKER_FILE=Dockerfile
+elif [ $DB_VERSION = '19.3.0' ]; then
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/LINUX.X64_193000_db_home.zip
   DOCKER_FILE=Dockerfile
 elif [ $DB_VERSION = '18.4.0' ] && [ $DB_EDITION = 'xe' ]; then
@@ -72,6 +75,7 @@ else
   echo "Unknown or unsupported database version and/or edition."
 fi
 
+# TODO: test OML4R support for 21.3.0
 if [[ $OML4R_SUPPORT =~ (Y|y) ]]; then
   if [[
     ($DB_VERSION = '19.3.0')
