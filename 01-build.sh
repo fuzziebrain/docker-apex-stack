@@ -68,6 +68,9 @@ elif [ $DB_VERSION = '12.1.0.2' ]; then
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/linuxamd64_12102_database_1of2.zip
   cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/linuxamd64_12102_database_2of2.zip
   DOCKER_FILE=Dockerfile.$DB_EDITION
+elif [ $DB_VERSION = '11.2.0.2' ]; then
+  cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/oracle-xe-11.2.0-1.0.x86_64.rpm.zip
+  DOCKER_FILE=Dockerfile.$DB_EDITION
 else
   echo "Unknown or unsupported database version and/or edition."
 fi
