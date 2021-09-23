@@ -44,6 +44,8 @@
 1. Enter `Y` to continue.
 1. Wait till there is minimal or no activity in the script then go to http://localhost:50080/ords/apex.
 
+If you are new to APEX, then I highly recommend checking out some of the learning resources [here](https://apex.oracle.com/en/learn/).
+
 ```
 $ ./quickstart.sh
 Enter an email address for your APEX administrator (required): apexdev@example.com
