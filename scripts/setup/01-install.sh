@@ -6,7 +6,9 @@ export SCRIPT_DIR=$SCRIPTS_ROOT
 export FILES_DIR=/tmp/files
 
 echo "##### Install dependencies if required #####"
-if [ $INSTALL_FILE_JAVA == 'openjdk1.8' ]; then
+if [ $INSTALL_FILE_JAVA == 'java17' ]; then
+  yum install -y https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.rpm
+elif [ $INSTALL_FILE_JAVA == 'openjdk1.8' ]; then
   yum install -y java-1.8.0-openjdk
 elif [ $INSTALL_FILE_JAVA == 'openjdk11' ]; then
   yum install -y java-11-openjdk
