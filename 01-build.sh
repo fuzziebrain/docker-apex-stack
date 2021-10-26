@@ -10,6 +10,7 @@ DB_EDITION=$(echo ${DB_EDITION:-xe} | tr '[:upper:]' '[:lower:]')
 FILES_DIR=${FILES_DIR:-$BASE_DIR/files}
 ALLOW_DB_PATCHING=${ALLOW_DB_PATCHING:-N}
 OML4R_SUPPORT=${OML4R_SUPPORT:-N}
+XE_DOWNLOAD_BASE_URL="https://download.oracle.com/otn-pub/otn_software/db-express/"
 
 SED_OPTS='-i -r'
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -50,6 +51,12 @@ if [ $DB_VERSION = '21.3.0' ] && [ $DB_EDITION = 'xe' ]; then
 
   mkdir dockerfiles
   mv docker-oracledb21c-xe dockerfiles/$DB_VERSION
+
+  if [[ $XE_NO_DOWNLOAD =~ (Y|y) ]]; then
+    cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/oracle-database-xe-21c-1.0-1.ol7.x86_64.rpm
+    sed $SED_OPTS "s|${XE_DOWNLOAD_BASE_URL}||g" ${DOCKER_FILE:-Dockerfile}
+    sed $SED_OPTS "s|^(COPY)(.+CHECK_SPACE_FILE.+INSTALL_DIR/)$|\1 \$INSTALL_FILE_1\2|g" ${DOCKER_FILE:-Dockerfile}
+  fi
 else
   echo "##### Grabbing official Docker images from Oracle #####"
   git clone https://github.com/oracle/docker-images.git tmp
@@ -66,8 +73,12 @@ else
     cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/LINUX.X64_193000_db_home.zip
     DOCKER_FILE=Dockerfile
   elif [ $DB_VERSION = '18.4.0' ] && [ $DB_EDITION = 'xe' ]; then
-    cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/oracle-database-xe-18c-1.0-1.x86_64.rpm
     DOCKER_FILE=Dockerfile.$DB_EDITION
+    if [[ $XE_NO_DOWNLOAD =~ (Y|y) ]]; then
+      cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/oracle-database-xe-18c-1.0-1.x86_64.rpm
+      sed $SED_OPTS "s|${XE_DOWNLOAD_BASE_URL}||g" ${DOCKER_FILE:-Dockerfile}
+      sed $SED_OPTS "s|^(COPY)(.+CHECK_SPACE_FILE.+INSTALL_DIR/)$|\1 \$INSTALL_FILE_1\2|g" ${DOCKER_FILE:-Dockerfile}
+    fi
   elif [ $DB_VERSION = '18.3.0' ]; then
     cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/LINUX.X64_180000_db_home.zip
     DOCKER_FILE=Dockerfile
@@ -119,7 +130,7 @@ fi
 
 echo "##### Building Docker Image for Oracle Database ${DB_VERSION} ${DB_EDITION} #####"
 if [ $DB_VERSION = '21.3.0' ] && [ $DB_EDITION = 'xe' ]; then
-  cd dockerfiles/${DB_VERSION} && docker build -t oracle/database:${DB_VERSION}-${DB_EDITION} .
+  cd dockerfiles/${DB_VERSION} && docker build --no-cache -t oracle/database:${DB_VERSION}-${DB_EDITION} .
 else
   cd dockerfiles && . buildContainerImage.sh -v ${DB_VERSION} ${DB_EDITION_FLAG}
 fi
