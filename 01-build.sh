@@ -56,11 +56,11 @@ echo "##### Staging RPM #####"
 if [ $DB_VERSION = '21.3.0' ]; then
   if [ $DB_EDITION = 'xe' ]; then
     DOCKER_FILE=Dockerfile.$DB_EDITION
-    if [[ $XE_NO_DOWNLOAD =~ (Y|y) ]]; then
+    if [[ $XE_USE_LOCAL_COPY =~ (Y|y) ]]; then
       cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/oracle-database-xe-21c-1.0-1.ol7.x86_64.rpm
       sed $SED_OPTS "s|${XE_DOWNLOAD_BASE_URL}||g" ${DOCKER_FILE:-Dockerfile}
       sed $SED_OPTS "s|^(COPY)(.+CHECK_SPACE_FILE.+INSTALL_DIR/)$|\1 \$INSTALL_FILE_1\2|g" ${DOCKER_FILE:-Dockerfile}
-    fi  
+    fi
   else
     cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/LINUX.X64_213000_db_home.zip
     DOCKER_FILE=Dockerfile
@@ -70,7 +70,7 @@ elif [ $DB_VERSION = '19.3.0' ]; then
   DOCKER_FILE=Dockerfile
 elif [ $DB_VERSION = '18.4.0' ] && [ $DB_EDITION = 'xe' ]; then
   DOCKER_FILE=Dockerfile.$DB_EDITION
-  if [[ $XE_NO_DOWNLOAD =~ (Y|y) ]]; then
+  if [[ $XE_USE_LOCAL_COPY =~ (Y|y) ]]; then
     cd dockerfiles/$DB_VERSION && curl --progress-bar -O file://$FILES_DIR/oracle-database-xe-18c-1.0-1.x86_64.rpm
     sed $SED_OPTS "s|${XE_DOWNLOAD_BASE_URL}||g" ${DOCKER_FILE:-Dockerfile}
     sed $SED_OPTS "s|^(COPY)(.+CHECK_SPACE_FILE.+INSTALL_DIR/)$|\1 \$INSTALL_FILE_1\2|g" ${DOCKER_FILE:-Dockerfile}
