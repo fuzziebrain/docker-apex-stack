@@ -94,3 +94,4 @@ oradata
 *.env
 *.bak
 *.log
+*.tar.gz
