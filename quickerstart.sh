@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Use bash quickstart.sh myemail@example.com Testpassword123 dockerapex21xe mysetting.env   
+# Use bash quickerstart.sh myemail@example.com Testpassword123 dockerapex21xe mysetting.env   
 ##### Create environment variables file. #####
 APEX_ADMIN_EMAIL=$1
 ORACLE_PWD=$2
