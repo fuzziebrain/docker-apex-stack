@@ -18,7 +18,7 @@ APEX_REST_PUBLIC_USER_PWD=$ORACLE_PWD
 ORDS_PUBLIC_USER_PWD=$ORACLE_PWD
 INSTALL_FILE_APEX=apex-latest.zip
 INSTALL_FILE_ORDS=ords-latest.zip
-INSTALL_FILE_JAVA=OpenJDK11U-jdk_x64_linux_hotspot_11.0.14_9.tar.gz
+INSTALL_FILE_JAVA=jdk-17_linux-x64_bin.tar.gz
 DOCKER_ORDS_PORT=50080
 DOCKER_EM_PORT=55500
 DOCKER_DB_PORT=51521
@@ -39,7 +39,7 @@ EOF
 echo "##### Downloading latest binaries for APEX and ORDS #####"
 curl https://download.oracle.com/otn_software/apex/apex-latest.zip --output files/apex-latest.zip
 curl https://download.oracle.com/otn_software/java/ords/ords-latest.zip --output files/ords-latest.zip
-curl https://github.com/adoptium/temurin11-binaries/releases/download/jdk-11.0.14%2B9/OpenJDK11U-jdk_x64_linux_hotspot_11.0.14_9.tar.gz --output files/OpenJDK11U-jdk_x64_linux_hotspot_11.0.14_9.tar.gz
+curl https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.tar.gz --output files/jdk-17_linux-x64_bin.tar.gz
 
 echo "Set Permissions"
 sudo chmod +x 01-build.sh
