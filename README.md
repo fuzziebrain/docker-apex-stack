@@ -74,7 +74,7 @@ Just insert email, password, containername and desired settingsfile-name.
     $ bash quickerstart.sh myemail@example.com MyPassword123 dockerapex21xe mysettings.env 
    ```
 
-You can modify the quickstarter.sh to adjust more environment-variables if needed.
+You can modify the quickerstarter.sh to adjust more environment-variables if needed.
 
 
 ## Additional Notes About the Settings File
