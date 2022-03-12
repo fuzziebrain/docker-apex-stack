@@ -6,18 +6,29 @@ export SCRIPT_DIR=$SCRIPTS_ROOT
 export FILES_DIR=/tmp/files
 
 echo "##### Install dependencies if required #####"
-if [ $INSTALL_FILE_JAVA == 'openjdk1.8' ]; then
-  yum install -y java-1.8.0-openjdk
-elif [ $INSTALL_FILE_JAVA == 'openjdk11' ]; then
-  yum install -y java-11-openjdk
-else
-  export JAVA_HOME=$ORACLE_BASE/product/java/latest
-  export PATH=$JAVA_HOME/bin:$PATH
-  if [ ! -d $JAVA_HOME ]; then
-    JAVA_DIR_NAME=`tar -tzf $FILES_DIR/$INSTALL_FILE_JAVA | head -1 | cut -f1 -d"/"`
-    mkdir -p $ORACLE_BASE/product/java
-    tar zxf $FILES_DIR/$INSTALL_FILE_JAVA --directory $ORACLE_BASE/product/java
-    ln -s $ORACLE_BASE/product/java/$JAVA_DIR_NAME $JAVA_HOME
+if [ ! $(command -v java) ]; then
+  if [[ $UID == "0" && $INSTALL_FILE_JAVA == 'java17' ]]; then
+    yum install -y https://download.oracle.com/java/17/latest/jdk-17_linux-x64_bin.rpm
+  elif [[ $UID == "0" && $INSTALL_FILE_JAVA == 'openjdk1.8' ]]; then
+    yum install -y java-1.8.0-openjdk
+  elif [[ $UID == "0" && $INSTALL_FILE_JAVA == 'openjdk11' ]]; then
+    yum install -y java-11-openjdk
+  else
+    export JAVA_HOME=$ORACLE_BASE/product/java/latest
+    export PATH=$JAVA_HOME/bin:$PATH
+
+    if [[ ! $FILENAME =~ .tar.gz$ ]]; then
+      export INSTALL_FILE_JAVA="jdk-17_linux-x64_bin.tar.gz"
+      wget https://download.oracle.com/java/17/latest/$INSTALL_FILE_JAVA \
+        -o $FILES_DIR/$INSTALL_FILE_JAVA
+    fi
+
+    if [ ! -d $JAVA_HOME ]; then
+      JAVA_DIR_NAME=`tar -tzf $FILES_DIR/$INSTALL_FILE_JAVA | head -1 | cut -f1 -d"/"`
+      mkdir -p $ORACLE_BASE/product/java
+      tar zxf $FILES_DIR/$INSTALL_FILE_JAVA --directory $ORACLE_BASE/product/java
+      ln -s $ORACLE_BASE/product/java/$JAVA_DIR_NAME $JAVA_HOME
+    fi
   fi
 fi
 
