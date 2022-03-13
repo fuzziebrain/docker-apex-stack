@@ -17,17 +17,22 @@ if [ ! $(command -v java) ]; then
     export JAVA_HOME=$ORACLE_BASE/product/java/latest
     export PATH=$JAVA_HOME/bin:$PATH
 
-    if [[ ! $FILENAME =~ .tar.gz$ ]]; then
-      export INSTALL_FILE_JAVA="jdk-17_linux-x64_bin.tar.gz"
-      wget https://download.oracle.com/java/17/latest/$INSTALL_FILE_JAVA \
-        -o $FILES_DIR/$INSTALL_FILE_JAVA
-    fi
-
     if [ ! -d $JAVA_HOME ]; then
-      JAVA_DIR_NAME=`tar -tzf $FILES_DIR/$INSTALL_FILE_JAVA | head -1 | cut -f1 -d"/"`
-      mkdir -p $ORACLE_BASE/product/java
-      tar zxf $FILES_DIR/$INSTALL_FILE_JAVA --directory $ORACLE_BASE/product/java
-      ln -s $ORACLE_BASE/product/java/$JAVA_DIR_NAME $JAVA_HOME
+      if [[ ! $FILENAME =~ .tar.gz$ ]]; then
+        INSTALL_FILE_JAVA_DEFAULT="jdk-17_linux-x64_bin.tar.gz"
+        curl https://download.oracle.com/java/17/latest/$INSTALL_FILE_JAVA_DEFAULT \
+          --output /tmp/$INSTALL_FILE_JAVA_DEFAULT
+        JAVA_DIR_NAME=`tar -tzf /tmp/$INSTALL_FILE_JAVA_DEFAULT | head -1 | cut -f1 -d"/"`
+        mkdir -p $ORACLE_BASE/product/java
+        tar zxf /tmp//$INSTALL_FILE_JAVA_DEFAULT --directory $ORACLE_BASE/product/java
+        ln -s $ORACLE_BASE/product/java/$JAVA_DIR_NAME $JAVA_HOME
+        rm -f /tmp/$INSTALL_FILE_JAVA_DEFAULT
+      else
+        JAVA_DIR_NAME=`tar -tzf $FILES_DIR/$INSTALL_FILE_JAVA | head -1 | cut -f1 -d"/"`
+        mkdir -p $ORACLE_BASE/product/java
+        tar zxf $FILES_DIR/$INSTALL_FILE_JAVA --directory $ORACLE_BASE/product/java
+        ln -s $ORACLE_BASE/product/java/$JAVA_DIR_NAME $JAVA_HOME
+      fi
     fi
   fi
 fi
