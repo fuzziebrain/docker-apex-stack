@@ -13,9 +13,24 @@ mkdir -p $ORDS_CONFIG_DIR
 
 cd $ORDS_HOME
 
-PARAM_FILE=$ORDS_HOME/params/custom_params.properties
+if [[ -f bin/ords ]]; then
+    $ORDS_HOME/bin/ords --config $ORDS_CONFIG_DIR install \
+        --admin-user sys \
+        --proxy-user \
+        --db-hostname localhost \
+        --db-port 1521 \
+        --db-servicename ${ORACLE_PDB:-XEPDB1} \
+        --feature-rest-enabled-sql $([[ $SQLDEVWEB =~ (Y|y) || $REST_ENABLED_SQL =~ (Y|y) || $DATABASEAPI =~ (Y|y) ]] && echo true || echo false) \
+        --feature-sdw $([[ $SQLDEVWEB =~ (Y|y) ]] && echo true || echo false) \
+        --feature-db-api $([[ $DATABASEAPI =~ (Y|y) ]] && echo true || echo false) \
+        --password-stdin << EOF
+${ORDS_PUBLIC_USER_PWD:-$ORACLE_PWD}
+${ORACLE_PWD}
+EOF
+else
+    PARAM_FILE=$ORDS_HOME/params/custom_params.properties
 
-cat << EOF > $PARAM_FILE
+    cat << EOF > $PARAM_FILE
 db.hostname=localhost
 db.password=${APEX_PUBLIC_USER_PWD:-$ORACLE_PWD}
 db.port=1521
@@ -36,19 +51,20 @@ sys.password=${ORACLE_PWD}
 standalone.mode=false
 EOF
 
-# If SQLDEVWEB = Y, then REST_ENABLED_SQL must be Y
-if [[ $SQLDEVWEB =~ (Y|y) || $REST_ENABLED_SQL =~ (Y|y) || $DATABASEAPI =~ (Y|y) ]]; then
-    echo "restEnabledSql.active=true" >> $PARAM_FILE
+    # If SQLDEVWEB = Y, then REST_ENABLED_SQL must be Y
+    if [[ $SQLDEVWEB =~ (Y|y) || $REST_ENABLED_SQL =~ (Y|y) || $DATABASEAPI =~ (Y|y) ]]; then
+        echo "restEnabledSql.active=true" >> $PARAM_FILE
+    fi
+
+    if [[ $SQLDEVWEB =~ (Y|y) ]]; then
+        echo "feature.sdw=true" >> $PARAM_FILE
+    fi
+
+    if [[ $DATABASEAPI =~ (Y|y) ]]; then
+        echo "database.api.enabled=true" >> $PARAM_FILE
+    fi
+
+    java -jar ords.war configdir $ORDS_CONFIG_DIR
+
+    java -jar ords.war install simple --parameterFile $ORDS_HOME/params/custom_params.properties
 fi
-
-if [[ $SQLDEVWEB =~ (Y|y) ]]; then
-    echo "feature.sdw=true" >> $PARAM_FILE
-fi
-
-if [[ $DATABASEAPI =~ (Y|y) ]]; then
-    echo "database.api.enabled=true" >> $PARAM_FILE
-fi
-
-java -jar ords.war configdir $ORDS_CONFIG_DIR
-
-java -jar ords.war install simple --parameterFile $ORDS_HOME/params/custom_params.properties
