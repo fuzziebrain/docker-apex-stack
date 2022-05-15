@@ -24,8 +24,8 @@ if [[ -f bin/ords ]]; then
         --feature-sdw $([[ $SQLDEVWEB =~ (Y|y) ]] && echo true || echo false) \
         --feature-db-api $([[ $DATABASEAPI =~ (Y|y) ]] && echo true || echo false) \
         --password-stdin << EOF
-${ORDS_PUBLIC_USER_PWD:-$ORACLE_PWD}
 ${ORACLE_PWD}
+${ORDS_PUBLIC_USER_PWD:-$ORACLE_PWD}
 EOF
 else
     PARAM_FILE=$ORDS_HOME/params/custom_params.properties
