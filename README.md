@@ -18,8 +18,8 @@
 1. Git clone this repository and set it as the working directory.
 1. Download the installer files:
     * The required Oracle Database installation files from [OTN](https://www.oracle.com/technetwork/database/) (supports versions up to 21.3.0 including Express Edition, as of September 22, 2021). **Note:** For [Oracle Database 21c XE](https://oracle.com/xe), you are no longer required to download the binaries (see issue #39).
-    * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 22.1 as of May 2, 2021)
-    * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 22.1 as of May 2, 2022)
+    * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 22.2 as of January 01, 2023)
+    * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 22.4 as of January 01, 2023)
 1. For releases after [0.6.0](https://github.com/fuzziebrain/docker-apex-stack/releases/tag/0.6.0), either choose to use the binaries from [OpenJDK](https://openjdk.java.net/), download a licensed Java runtime, or the [free to use](https://blogs.oracle.com/java/post/free-java-license) Java 17 from Oracle. Please refer to the additonal notes section [below](#Additional-Notes-About-the-Settings-File) for details about the `INSTALL_FILE_JAVA` parameter.
 1. Place all installer files in the sub-directory `files`.
 1. Create a file that contains the required environment variables for your build. Please refer to the additonal notes [below](#Additional-Notes-About-the-Settings-File) for more information about the various parameters that can be set. Included in this repository are two examples or templates that you can use:
@@ -72,13 +72,11 @@ Type "Y" to continue or CTRL-C to exit: y
 * SQL Developer Web is now availablel with ORDS version 19.4. This feature is enabled by default. To turn it off, set the environment variable `SQLDEVWEB` to `N`. The REST-enabled SQL feature can be managed by the variable `REST_ENABLED_SQL`, but note that this value is ignored if SQL Developer Web is activated. For builds with earlier ORDS versions, the added configuration properties are safely ignored.
 * `DATABASEAPI` parameter added to enable Database API support for ORDS 19.x and later.
 * The variable `INSTALL_FILE_JAVA` accepts the following values:
-    * `java17`
+    * `java17` (default)
     * `openjdk11`
-    * `openjdk1.8`
-    * The filename of Java runtime tarball that you can download from [here](https://www.oracle.com/technetwork/java/javase/downloads/). It is recommended that you download the latest Java 8 server JRE, e.g. `server-jre-8u291-linux-x64.tar.gz`.
+    * The filename of Java runtime tarball that you can download from [here](https://www.oracle.com/technetwork/java/javase/downloads/).
 * Using the sample settings, the following are accessible:
     | Port | Application | URL |
     |-|-|-|
-    | 8080 | APEX | http://localhost:50080 |
+    | 8080 | APEX | http://localhost:8080 |
     | 1521 | Database | N/A |
-    | 5500 | Enterprise Manager Express | https://localhost:55500/em |

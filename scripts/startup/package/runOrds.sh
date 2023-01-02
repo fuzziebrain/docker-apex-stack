@@ -10,15 +10,21 @@ ORACLE_SID=${ORACLE_SID:-XE}
 ORDS_CONFIG_DIR=$ORACLE_BASE/oradata/ordsconfig/$ORACLE_PDB
 APEX_IMAGE_PATH=$APEX_HOME/images
 
-cd $ORDS_HOME
+if [ -f "$ORDS_HOME/bin/ords" ]; then
+  if [ -z $(command -v ords) ]; then
+    echo -e 'export PATH="$PATH:/opt/oracle/product/ords/bin"' >> $HOME/.bashrc
+    . $HOME/.bashrc
+  fi
 
-if [[ -f bin/ords ]]; then
-  $ORDS_HOME/bin/ords --config $ORDS_CONFIG_DIR serve \
-    --apex-images $APEX_IMAGE_PATH
+  ords --config ${ORDS_CONFIG_DIR} serve \
+    --port 8080 \
+    --apex-images ${APEX_IMAGE_PATH}
 else
+  cd $ORDS_HOME
+
   java -jar ords.war configdir $ORDS_CONFIG_DIR
 
   java -jar ords.war standalone \
     --port 8080 \
-    --apex-images $APEX_IMAGE_PATH
+    --apex-images ${APEX_IMAGE_PATH}
 fi
