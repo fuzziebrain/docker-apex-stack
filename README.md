@@ -19,7 +19,7 @@
 1. Download the installer files:
     * The required Oracle Database installation files from [OTN](https://www.oracle.com/technetwork/database/) (supports versions up to 21.3.0 including Express Edition, as of September 22, 2021). **Note:** For [Oracle Database 21c XE](https://oracle.com/xe), you are no longer required to download the binaries (see issue #39).
     * [Oracle Application Express](https://apex.oracle.com/download) (supports versions up 22.2 as of January 01, 2023)
-    * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 22.4 as of January 01, 2023)
+    * [Oracle REST Data Services](https://www.oracle.com/technetwork/developer-tools/rest-data-services/downloads/index.html) (supports versions up to 23.1 as of April 01, 2023)
 1. For releases after [0.6.0](https://github.com/fuzziebrain/docker-apex-stack/releases/tag/0.6.0), either choose to use the binaries from [OpenJDK](https://openjdk.java.net/), download a licensed Java runtime, or the [free to use](https://blogs.oracle.com/java/post/free-java-license) Java 17 from Oracle. Please refer to the additonal notes section [below](#Additional-Notes-About-the-Settings-File) for details about the `INSTALL_FILE_JAVA` parameter.
 1. Place all installer files in the sub-directory `files`.
 1. Create a file that contains the required environment variables for your build. Please refer to the additonal notes [below](#Additional-Notes-About-the-Settings-File) for more information about the various parameters that can be set. Included in this repository are two examples or templates that you can use:
