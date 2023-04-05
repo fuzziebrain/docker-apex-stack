@@ -46,14 +46,18 @@ if [ -d 'dockerfiles' ]; then
 fi
 
 echo "##### Grabbing official Docker images from Oracle #####"
-git clone https://github.com/oracle/docker-images.git tmp
+git clone https://github.com/fuzziebrain/docker-images.git tmp
 
 mv tmp/OracleDatabase/SingleInstance/dockerfiles/ .
 
 rm -rf tmp/
 
 echo "##### Staging RPM #####"
-if [ $DB_VERSION = '21.3.0' ]; then
+if [ $DB_VERSION = '23.2.0' ]; then
+  if [ $DB_EDITION = 'free' ]; then
+    echo "Do nothing."
+  fi
+elif [ $DB_VERSION = '21.3.0' ]; then
   if [ $DB_EDITION = 'xe' ]; then
     DOCKER_FILE=Dockerfile.$DB_EDITION
     if [[ $XE_USE_LOCAL_COPY =~ (Y|y) ]]; then

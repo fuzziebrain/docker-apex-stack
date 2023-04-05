@@ -1,5 +1,7 @@
 # Build an APEX Stack with Docker
 
+> **NOTE** This branch provides experimental and temporary support for the newly release [Oracle Database Free 23c](https://www.oracle.com/database/free/).
+
 > For background information on this repository, please read this [blog post](https://fuzziebrain.com/content/id/1902/).
 
 ## Prerequisites
