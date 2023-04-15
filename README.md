@@ -62,6 +62,21 @@ Type "Y" to continue or CTRL-C to exit: y
 >
 > Should you forget to save your password, you can find it in the generated settings file along with any other details about the container. It is named after your container, e.g. `apexiscool.env`.
 
+## Quick-er Start
+By [SilasMahler](https://github.com/silasmahler)
+
+The [`quickerstart.sh`](./quickerstart.sh)  is a modification of the quickstart.sh to be more convenient and even faster to use. Thanks for the nice work Adrian and Martin :)
+
+### Usage
+Just insert email, password, containername and desired settingsfile-name.
+
+   ```bash
+    $ bash quickerstart.sh myemail@example.com MyPassword123 dockerapex21xe mysettings.env 
+   ```
+
+You can modify the quickerstarter.sh to adjust more environment-variables if needed.
+
+
 ## Additional Notes About the Settings File
 
 * Specify the Docker network to attach to using the parameter `DOCKER_NETWORK_NAME`. The run script will check if the network exists, and if not, create it.
